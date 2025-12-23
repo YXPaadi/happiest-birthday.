@@ -3,158 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday My Love</title>
+    <title>For My Queen ❤️</title>
     <style>
         :root {
-            --primary-pink: #ff4d6d;
-            --soft-pink: #fff0f3;
-            --deep-red: #c9184a;
+            --bg-color: #0b0e14;
+            --accent: #ff4d6d;
         }
 
         body, html {
             margin: 0; padding: 0; width: 100%; height: 100%;
-            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
-            font-family: 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-color);
+            font-family: 'Poppins', sans-serif;
             overflow: hidden;
             display: flex; justify-content: center; align-items: center;
         }
 
-        /* Floating background hearts */
-        .bg-heart {
-            position: absolute; color: rgba(255, 255, 255, 0.3);
-            font-size: 20px; animation: floatUp 6s linear infinite;
-            top: 100vh; z-index: 1;
+        /* Starry Background */
+        #stars-container {
+            position: absolute; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
+            z-index: 0;
         }
 
-        @keyframes floatUp {
-            to { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+        .star {
+            position: absolute; background: white; border-radius: 50%;
+            opacity: 0.5; animation: twinkle var(--duration) infinite;
         }
 
-        /* Frosted Glass Container */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 30px;
-            padding: 50px;
-            width: 80%; max-width: 500px;
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Glass Card */
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 40px;
+            padding: 40px;
+            width: 85%; max-width: 450px;
             text-align: center;
-            box-shadow: 0 25px 45px rgba(0,0,0,0.2);
+            box-shadow: 0 0 50px rgba(255, 77, 109, 0.2);
             z-index: 10;
-            display: none; /* Hidden until button click */
+            display: none;
+            animation: slideUp 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         .main-heart {
-            font-size: 80px; color: white;
-            animation: pulse 1.5s ease-in-out infinite;
-            margin-bottom: 20px;
-            text-shadow: 0 0 20px rgba(255,255,255,0.5);
+            font-size: 60px;
+            filter: drop-shadow(0 0 15px #ff4d6d);
+            animation: beat 1.2s infinite;
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+        @keyframes beat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
         }
 
-        h1 { color: white; font-size: 2.5rem; margin: 10px 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+        h1 { color: white; font-size: 2rem; margin: 15px 0; letter-spacing: 2px; }
         
-        .message {
-            color: white; font-size: 1.1rem; line-height: 1.8;
-            margin-top: 20px; min-height: 100px;
+        #typewriter {
+            color: #ffb3c1; font-size: 1.1rem; line-height: 1.6;
+            min-height: 80px; font-style: italic;
         }
 
-        #clock-container {
-            margin-top: 30px; padding: 15px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 15px; color: white;
+        /* Countdown Boxes */
+        .countdown {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 10px; margin-top: 25px;
         }
 
-        .unit { display: inline-block; margin: 0 10px; }
-        .num { font-size: 1.8rem; font-weight: bold; display: block; }
-        .label { font-size: 0.8rem; text-transform: uppercase; opacity: 0.8; }
+        .time-box {
+            background: rgba(255, 77, 109, 0.15);
+            padding: 10px; border-radius: 15px;
+            border: 1px solid rgba(255, 77, 109, 0.3);
+        }
 
-        #start-btn {
-            padding: 20px 40px; font-size: 1.5rem;
-            background: white; color: var(--primary-pink);
+        .time-box span { display: block; color: white; }
+        .time-box .num { font-size: 1.4rem; font-weight: bold; }
+        .time-box .label { font-size: 0.6rem; text-transform: uppercase; color: #ffb3c1; }
+
+        #launch-btn {
+            padding: 18px 35px; font-size: 1.2rem;
+            background: #ff4d6d; color: white;
             border: none; border-radius: 50px;
             cursor: pointer; font-weight: bold;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-            transition: 0.3s; z-index: 20;
+            box-shadow: 0 10px 30px rgba(255, 77, 109, 0.4);
+            transition: 0.4s; z-index: 20;
         }
 
-        #start-btn:hover { transform: scale(1.05); background: var(--soft-pink); }
+        #launch-btn:hover { transform: scale(1.1); background: #ff758c; }
+
+        /* Heart Trail Effect */
+        .trail-heart {
+            position: absolute; pointer-events: none;
+            color: #ff4d6d; font-size: 15px;
+            animation: fadeOut 1s forwards;
+        }
+
+        @keyframes fadeOut {
+            to { transform: translateY(-50px) scale(0.5); opacity: 0; }
+        }
     </style>
 </head>
 <body>
 
     <audio id="myAudio" loop><source src="aud.mp3" type="audio/mp3"></audio>
+    <div id="stars-container"></div>
 
-    <button id="start-btn" onclick="celebrate()">Tap to reveal your gift ❤️</button>
+    <button id="launch-btn" onclick="startApp()">❤️ Launch My Love ❤️</button>
 
-    <div class="glass-card" id="card">
+    <div class="card" id="card">
         <div class="main-heart">❤️</div>
-        <h1>My Beautiful bestie 💞</h1>
-        <div class="message" id="typewriter"></div>
+        <h1>For My bestie</h1>
+        <div id="typewriter"></div>
         
-        <div id="clock-container">
-            <div class="unit"><span class="num" id="days">00</span><span class="label">Days</span></div>
-            <div class="unit"><span class="num" id="hours">00</span><span class="label">Hours</span></div>
-            <div class="unit"><span class="num" id="mins">00</span><span class="label">Mins</span></div>
-            <div class="unit"><span class="num" id="secs">00</span><span class="label">Secs</span></div>
+        <div class="countdown">
+            <div class="time-box"><span class="num" id="d">0</span><span class="label">Days</span></div>
+            <div class="time-box"><span class="num" id="h">0</span><span class="label">Hours</span></div>
+            <div class="time-box"><span class="num" id="m">0</span><span class="label">Mins</span></div>
+            <div class="time-box"><span class="num" id="s">0</span><span class="label">Secs</span></div>
         </div>
     </div>
 
     <script>
-        const msg = "Happy Birthday! Avikaa 🎈 May god bless you with infinite happiness and protect your gorgeous smile 🍀. I love you today, tomorrow, and for all the lifetimes to come ❤️😘";
-        let i = 0;
-
-        function celebrate() {
-            document.getElementById('myAudio').play();
-            document.getElementById('start-btn').style.display = 'none';
-            document.getElementById('card').style.display = 'block';
-            
-            // Start background hearts
-            setInterval(createBGHeart, 300);
-            
-            // Start typewriter
-            typeWriter();
-            
-            // Start Clock
-            updateClock();
-            setInterval(updateClock, 1000);
+        // Star Background Creation
+        const starsContainer = document.getElementById('stars-container');
+        for (let i = 0; i < 150; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            const size = Math.random() * 3 + 'px';
+            star.style.width = size; star.style.height = size;
+            star.style.setProperty('--duration', Math.random() * 3 + 2 + 's');
+            starsContainer.appendChild(star);
         }
 
-        function typeWriter() {
-            if (i < msg.length) {
-                document.getElementById("typewriter").innerHTML += msg.charAt(i);
-                i++;
-                setTimeout(typeWriter, 50);
+        // Heart Trail on Mouse Move
+        document.addEventListener('mousemove', (e) => {
+            if(Math.random() > 0.8) {
+                const h = document.createElement('span');
+                h.className = 'trail-heart';
+                h.innerHTML = '❤️';
+                h.style.left = e.pageX + 'px';
+                h.style.top = e.pageY + 'px';
+                document.body.appendChild(h);
+                setTimeout(() => h.remove(), 1000);
+            }
+        });
+
+        const msg = "To my dearest best friend ... 🎈 You make every day feel like a dream. Happy Birthday!Avika May your life be as bright as these stars. ❤️✨";
+        let j = 0;
+
+        function startApp() {
+            document.getElementById('myAudio').play();
+            document.getElementById('launch-btn').style.display = 'none';
+            document.getElementById('card').style.display = 'block';
+            type();
+            updateTimer();
+            setInterval(updateTimer, 1000);
+        }
+
+        function type() {
+            if (j < msg.length) {
+                document.getElementById("typewriter").innerHTML += msg.charAt(j);
+                j++;
+                setTimeout(type, 60);
             }
         }
 
-        function createBGHeart() {
-            const h = document.createElement('div');
-            h.classList.add('bg-heart');
-            h.innerHTML = '❤️';
-            h.style.left = Math.random() * 100 + 'vw';
-            h.style.fontSize = Math.random() * 30 + 10 + 'px';
-            h.style.animationDuration = Math.random() * 3 + 4 + 's';
-            document.body.appendChild(h);
-            setTimeout(() => h.remove(), 6000);
-        }
-
-        function updateClock() {
+        function updateTimer() {
             const target = new Date("2026-02-18T00:00:00");
-            const now = new Date();
-            const diff = target - now;
-
+            const diff = target - new Date();
             if (diff > 0) {
-                document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
-                document.getElementById('hours').innerText = Math.floor((diff / (1000 * 60 * 60)) % 24);
-                document.getElementById('mins').innerText = Math.floor((diff / 1000 / 60) % 60);
-                document.getElementById('secs').innerText = Math.floor((diff / 1000) % 60);
+                document.getElementById('d').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+                document.getElementById('h').innerText = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                document.getElementById('m').innerText = Math.floor((diff / 1000 / 60) % 60);
+                document.getElementById('s').innerText = Math.floor((diff / 1000) % 60);
             }
         }
     </script>
