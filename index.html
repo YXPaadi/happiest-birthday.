@@ -5,125 +5,156 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday My Love</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: #ffebee;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        :root {
+            --primary-pink: #ff4d6d;
+            --soft-pink: #fff0f3;
+            --deep-red: #c9184a;
+        }
+
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
             overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        /* Floating background hearts */
+        .bg-heart {
+            position: absolute; color: rgba(255, 255, 255, 0.3);
+            font-size: 20px; animation: floatUp 6s linear infinite;
+            top: 100vh; z-index: 1;
+        }
+
+        @keyframes floatUp {
+            to { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Frosted Glass Container */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            padding: 50px;
+            width: 80%; max-width: 500px;
             text-align: center;
-        }
-
-        .container {
+            box-shadow: 0 25px 45px rgba(0,0,0,0.2);
             z-index: 10;
-            background: rgba(255, 255, 255, 0.8);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border: 2px solid #ffcdd2;
-            cursor: pointer;
+            display: none; /* Hidden until button click */
         }
 
-        h1 { color: #d32f2f; margin-bottom: 10px; }
-        p { color: #5d4037; font-size: 1.2rem; line-height: 1.6; }
-        #clock { font-size: 1.5rem; font-weight: bold; color: #c62828; margin-top: 20px; display: block; }
-
-        /* Floating Hearts Animation */
-        .heart {
-            position: absolute;
-            color: #ff5252;
-            font-size: 20px;
-            user-select: none;
-            animation: move 3s linear infinite;
-            top: -10%;
+        .main-heart {
+            font-size: 80px; color: white;
+            animation: pulse 1.5s ease-in-out infinite;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255,255,255,0.5);
         }
 
-        @keyframes move {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
+
+        h1 { color: white; font-size: 2.5rem; margin: 10px 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+        
+        .message {
+            color: white; font-size: 1.1rem; line-height: 1.8;
+            margin-top: 20px; min-height: 100px;
+        }
+
+        #clock-container {
+            margin-top: 30px; padding: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px; color: white;
+        }
+
+        .unit { display: inline-block; margin: 0 10px; }
+        .num { font-size: 1.8rem; font-weight: bold; display: block; }
+        .label { font-size: 0.8rem; text-transform: uppercase; opacity: 0.8; }
 
         #start-btn {
-            background: #ff5252;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: 0.3s;
+            padding: 20px 40px; font-size: 1.5rem;
+            background: white; color: var(--primary-pink);
+            border: none; border-radius: 50px;
+            cursor: pointer; font-weight: bold;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            transition: 0.3s; z-index: 20;
         }
 
-        #start-btn:hover { background: #d32f2f; }
-        #content { display: none; }
+        #start-btn:hover { transform: scale(1.05); background: var(--soft-pink); }
     </style>
 </head>
 <body>
 
-    <audio id="myAudio" loop>
-        <source src="aud.mp3" type="audio/mp3">
-    </audio>
+    <audio id="myAudio" loop><source src="aud.mp3" type="audio/mp3"></audio>
 
-    <div id="start-screen">
-        <button id="start-btn" onclick="startApp()">❤️ Open Birthday Message ❤️</button>
-    </div>
+    <button id="start-btn" onclick="celebrate()">Tap to reveal your gift ❤️</button>
 
-    <div id="content" class="container">
+    <div class="glass-card" id="card">
+        <div class="main-heart">❤️</div>
         <h1>My Beautiful bestie 💞</h1>
-        <p>Happy Birthday! Avika i hope i make this day special for you 🎈<br>
-        May god bless you with infinite happiness 🍀<br>
-        I love you today, tomorrow, and forever ❤️</p>
+        <div class="message" id="typewriter"></div>
         
-        <div id="clock"></div>
+        <div id="clock-container">
+            <div class="unit"><span class="num" id="days">00</span><span class="label">Days</span></div>
+            <div class="unit"><span class="num" id="hours">00</span><span class="label">Hours</span></div>
+            <div class="unit"><span class="num" id="mins">00</span><span class="label">Mins</span></div>
+            <div class="unit"><span class="num" id="secs">00</span><span class="label">Secs</span></div>
+        </div>
     </div>
 
     <script>
-        function startApp() {
-            // Play Audio
+        const msg = "Happy Birthday! Avikaa 🎈 May god bless you with infinite happiness and protect your gorgeous smile 🍀. I love you today, tomorrow, and for all the lifetimes to come ❤️😘";
+        let i = 0;
+
+        function celebrate() {
             document.getElementById('myAudio').play();
-            // Show Content
-            document.getElementById('start-screen').style.display = 'none';
-            document.getElementById('content').style.display = 'block';
-            // Start Heart Rain
-            setInterval(createHeart, 300);
+            document.getElementById('start-btn').style.display = 'none';
+            document.getElementById('card').style.display = 'block';
+            
+            // Start background hearts
+            setInterval(createBGHeart, 300);
+            
+            // Start typewriter
+            typeWriter();
+            
             // Start Clock
             updateClock();
             setInterval(updateClock, 1000);
         }
 
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
-            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
-            document.body.appendChild(heart);
-            setTimeout(() => { heart.remove(); }, 5000);
+        function typeWriter() {
+            if (i < msg.length) {
+                document.getElementById("typewriter").innerHTML += msg.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50);
+            }
+        }
+
+        function createBGHeart() {
+            const h = document.createElement('div');
+            h.classList.add('bg-heart');
+            h.innerHTML = '❤️';
+            h.style.left = Math.random() * 100 + 'vw';
+            h.style.fontSize = Math.random() * 30 + 10 + 'px';
+            h.style.animationDuration = Math.random() * 3 + 4 + 's';
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 6000);
         }
 
         function updateClock() {
-            const together = new Date("2026-02-18T00:00:00");
+            const target = new Date("2026-02-18T00:00:00");
             const now = new Date();
-            const diff = together - now;
-
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const secs = Math.floor((diff % (1000 * 60)) / 1000);
+            const diff = target - now;
 
             if (diff > 0) {
-                document.getElementById('clock').innerHTML = 
-                    `Time until Feb 18: <br> ${days}d ${hours}h ${mins}m ${secs}s`;
-            } else {
-                // If the date has passed, it counts how long it's been since
-                const countUp = now - together;
-                const d = Math.floor(countUp / (1000 * 60 * 60 * 24));
-                document.getElementById('clock').innerHTML = `Together for ${d} beautiful days!`;
+                document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+                document.getElementById('hours').innerText = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                document.getElementById('mins').innerText = Math.floor((diff / 1000 / 60) % 60);
+                document.getElementById('secs').innerText = Math.floor((diff / 1000) % 60);
             }
         }
     </script>
