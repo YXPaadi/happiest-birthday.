@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Bestie ❤️</title>
+    <title>For My gorgeous Mitrr ❤️</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap');
 
@@ -63,6 +63,7 @@
             margin-bottom: 20px;
         }
 
+        /* Countdown Grid */
         .timer-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -81,6 +82,7 @@
         .timer-item .number { font-size: 1.4rem; font-weight: 600; }
         .timer-item .label { font-size: 0.6rem; text-transform: uppercase; opacity: 0.7; }
 
+        /* Floating Heart Trail */
         .floating-heart {
             position: absolute;
             pointer-events: none;
@@ -127,11 +129,11 @@
 
     <audio id="myAudio" loop><source src="aud.mp3" type="audio/mp3"></audio>
 
-    <button id="start-btn" onclick="init()">Open for a Surprise, Bestie ❤️</button>
+    <button id="start-btn" onclick="init()">Touch My Heart, My friend ❤️</button>
 
     <div class="glass-container" id="container">
-        <h2>To My Best Friend</h2>
-        <h1>Happy Birthday!! Avika 💞</h1>
+        <h2>To My Beautiful bestfriend</h2>
+        <h1>Happy Birthday!Avika 💞</h1>
         <div id="typewriter"></div>
         
         <div class="timer-grid">
@@ -141,23 +143,18 @@
             <div class="timer-item"><span class="number" id="s">00</span><span class="label">Secs</span></div>
         </div>
 
-        <button id="reasons-btn" onclick="showReason()">A Reason Why You're the Best ❤️</button>
+        <button id="reasons-btn" onclick="showReason()">Click for a Reason Your my best ❤️</button>
     </div>
 
     <script>
-        const birthdayMsg = "To my ride or die, my favorite person, and my bestie... 🎈 Life is so much more fun with you by my side. May GOD bless you with endless joy and keep our bond strong forever. You deserve the world! Happy Birthday! ❤️✨";
+        const birthdayMsg = "To the woman who completes my world... 🌹 Every second spent with you is a gift from GOD. I am so blessed to call you my bestest friend. May your birthday be as radiant as your soul. I love you forever and always! ❤️✨";
         const reasons = [
-            "You're the only person who truly gets my vibe! ✨",
-            "You always know how to turn my bad day into a good one. 😂",
-            "You are the most supportive and loyal person I know. 🛡️",
-            "Our late-night deep talks and endless gossip sessions. 🌙",
-            "You never judge me, even when I'm being completely weird. 🤪",
-            "You have the kindest heart and the purest soul. 🤍",
-            "Life is 100x more fun whenever you're around! 🎈",
-            "You're not just a bestie; you're family to me. 🫂",
-            "You always have my back, no matter what happens. 🤝",
-            "Because you are simply irreplaceable! ❤️"
-            "Because I LOOOOOOOVVVEEEEE YOUUUUUUUUUUUUUUUUUUUU just give  us a chance and i will prove you that how beautiful world will be with me ♥"
+            "Your beautiful smile that lights up my day.",
+            "The way you care for me with so much love.",
+            "Your kind heart and pure soul.",
+            "Being the most amazing wife I could ever ask for.",
+            "The way you look at me.",
+            "How you make every house feel like a home."
         ];
         
         let charIndex = 0;
@@ -183,7 +180,7 @@
 
         function showReason() {
             const randomReason = reasons[Math.floor(Math.random() * reasons.length)];
-            alert("Why You're My Bestie: " + randomReason);
+            alert("Reason I Love You: " + randomReason);
         }
 
         document.addEventListener('mousedown', (e) => {
@@ -216,5 +213,3 @@
     </script>
 </body>
 </html>
-
-
