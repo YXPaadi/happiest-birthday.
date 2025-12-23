@@ -5,181 +5,203 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For My Queen ❤️</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap');
+
         :root {
-            --bg-color: #0b0e14;
+            --glass: rgba(255, 255, 255, 0.12);
+            --border: rgba(255, 255, 255, 0.3);
             --accent: #ff4d6d;
         }
 
         body, html {
             margin: 0; padding: 0; width: 100%; height: 100%;
-            background: var(--bg-color);
+            background: linear-gradient(-45deg, #ff4d6d, #c9184a, #7209b7, #4361ee);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
             font-family: 'Poppins', sans-serif;
             overflow: hidden;
             display: flex; justify-content: center; align-items: center;
         }
 
-        /* Starry Background */
-        #stars-container {
-            position: absolute; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
-            z-index: 0;
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        .star {
-            position: absolute; background: white; border-radius: 50%;
-            opacity: 0.5; animation: twinkle var(--duration) infinite;
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.2); }
-        }
-
-        /* Glass Card */
-        .card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 40px;
+        .glass-container {
+            position: relative;
+            background: var(--glass);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--border);
+            border-radius: 30px;
             padding: 40px;
-            width: 85%; max-width: 450px;
+            width: 85%;
+            max-width: 500px;
             text-align: center;
-            box-shadow: 0 0 50px rgba(255, 77, 109, 0.2);
-            z-index: 10;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
             display: none;
-            animation: slideUp 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 10;
         }
 
-        @keyframes slideUp {
-            from { transform: translateY(100px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.2rem;
+            color: #fff;
+            margin: 0 0 10px 0;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
         }
 
-        .main-heart {
-            font-size: 60px;
-            filter: drop-shadow(0 0 15px #ff4d6d);
-            animation: beat 1.2s infinite;
-        }
+        h2 { color: #ffb3c1; font-size: 1.2rem; margin-top: 0; font-weight: 400; letter-spacing: 2px; text-transform: uppercase; }
 
-        @keyframes beat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.15); }
-        }
-
-        h1 { color: white; font-size: 2rem; margin: 15px 0; letter-spacing: 2px; }
-        
         #typewriter {
-            color: #ffb3c1; font-size: 1.1rem; line-height: 1.6;
-            min-height: 80px; font-style: italic;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.95);
+            line-height: 1.6;
+            min-height: 100px;
+            margin-bottom: 20px;
         }
 
-        /* Countdown Boxes */
-        .countdown {
-            display: grid; grid-template-columns: repeat(4, 1fr);
-            gap: 10px; margin-top: 25px;
+        /* Countdown Grid */
+        .timer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 25px;
         }
 
-        .time-box {
-            background: rgba(255, 77, 109, 0.15);
-            padding: 10px; border-radius: 15px;
-            border: 1px solid rgba(255, 77, 109, 0.3);
+        .timer-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 5px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .time-box span { display: block; color: white; }
-        .time-box .num { font-size: 1.4rem; font-weight: bold; }
-        .time-box .label { font-size: 0.6rem; text-transform: uppercase; color: #ffb3c1; }
+        .timer-item span { display: block; color: white; }
+        .timer-item .number { font-size: 1.4rem; font-weight: 600; }
+        .timer-item .label { font-size: 0.6rem; text-transform: uppercase; opacity: 0.7; }
 
-        #launch-btn {
-            padding: 18px 35px; font-size: 1.2rem;
-            background: #ff4d6d; color: white;
-            border: none; border-radius: 50px;
-            cursor: pointer; font-weight: bold;
-            box-shadow: 0 10px 30px rgba(255, 77, 109, 0.4);
-            transition: 0.4s; z-index: 20;
+        /* Floating Heart Trail */
+        .floating-heart {
+            position: absolute;
+            pointer-events: none;
+            color: white;
+            filter: drop-shadow(0 0 5px var(--accent));
+            animation: floatAway 3s ease-out forwards;
         }
 
-        #launch-btn:hover { transform: scale(1.1); background: #ff758c; }
-
-        /* Heart Trail Effect */
-        .trail-heart {
-            position: absolute; pointer-events: none;
-            color: #ff4d6d; font-size: 15px;
-            animation: fadeOut 1s forwards;
+        @keyframes floatAway {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: translate(var(--mx), var(--my)) rotate(360deg); opacity: 0; }
         }
 
-        @keyframes fadeOut {
-            to { transform: translateY(-50px) scale(0.5); opacity: 0; }
+        #start-btn {
+            background: #fff;
+            color: #c9184a;
+            padding: 20px 45px;
+            border-radius: 50px;
+            font-size: 1.4rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 100;
         }
+
+        #reasons-btn {
+            display: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        #reasons-btn:hover { background: white; color: #c9184a; }
     </style>
 </head>
 <body>
 
     <audio id="myAudio" loop><source src="aud.mp3" type="audio/mp3"></audio>
-    <div id="stars-container"></div>
 
-    <button id="launch-btn" onclick="startApp()">❤️ Launch My Love ❤️</button>
+    <button id="start-btn" onclick="init()">Touch My Heart, My Wife ❤️</button>
 
-    <div class="card" id="card">
-        <div class="main-heart">❤️</div>
-        <h1>For My bestie</h1>
+    <div class="glass-container" id="container">
+        <h2>To My Beautiful Wife</h2>
+        <h1>Happy Birthday 💞</h1>
         <div id="typewriter"></div>
         
-        <div class="countdown">
-            <div class="time-box"><span class="num" id="d">0</span><span class="label">Days</span></div>
-            <div class="time-box"><span class="num" id="h">0</span><span class="label">Hours</span></div>
-            <div class="time-box"><span class="num" id="m">0</span><span class="label">Mins</span></div>
-            <div class="time-box"><span class="num" id="s">0</span><span class="label">Secs</span></div>
+        <div class="timer-grid">
+            <div class="timer-item"><span class="number" id="d">00</span><span class="label">Days</span></div>
+            <div class="timer-item"><span class="number" id="h">00</span><span class="label">Hours</span></div>
+            <div class="timer-item"><span class="number" id="m">00</span><span class="label">Mins</span></div>
+            <div class="timer-item"><span class="number" id="s">00</span><span class="label">Secs</span></div>
         </div>
+
+        <button id="reasons-btn" onclick="showReason()">Click open with your amazing finger ❤️</button>
     </div>
 
     <script>
-        // Star Background Creation
-        const starsContainer = document.getElementById('stars-container');
-        for (let i = 0; i < 150; i++) {
-            const star = document.createElement('div');
-            star.className = 'star';
-            star.style.left = Math.random() * 100 + '%';
-            star.style.top = Math.random() * 100 + '%';
-            const size = Math.random() * 3 + 'px';
-            star.style.width = size; star.style.height = size;
-            star.style.setProperty('--duration', Math.random() * 3 + 2 + 's');
-            starsContainer.appendChild(star);
+        const birthdayMsg = "To the woman who completes my world... 🌹 Every second spent with you is a gift from god. I am so blessed to call you my best friend May your birthday be as radiant as your soul. I love you forever and always! ❤️✨";
+        const reasons = [
+            "Your beautiful smile that lights up my day.",
+            "The way you care for me with so much love.",
+            "Your kind heart and pure soul.",
+            "Being the most amazing bestie I could ever ask for.",
+            "The way you look at me.",
+            "How you make every day feel like a heaven."
+            "HAPPY BIRTHDAY!! Avika"
+        ];
+        
+        let charIndex = 0;
+
+        function init() {
+            document.getElementById('myAudio').play();
+            document.getElementById('start-btn').style.display = 'none';
+            document.getElementById('container').style.display = 'block';
+            
+            typeWriter();
+            setInterval(updateCountdown, 1000);
         }
 
-        // Heart Trail on Mouse Move
-        document.addEventListener('mousemove', (e) => {
-            if(Math.random() > 0.8) {
-                const h = document.createElement('span');
-                h.className = 'trail-heart';
-                h.innerHTML = '❤️';
-                h.style.left = e.pageX + 'px';
-                h.style.top = e.pageY + 'px';
-                document.body.appendChild(h);
-                setTimeout(() => h.remove(), 1000);
+        function typeWriter() {
+            if (charIndex < birthdayMsg.length) {
+                document.getElementById("typewriter").innerHTML += birthdayMsg.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriter, 50);
+            } else {
+                document.getElementById('reasons-btn').style.display = 'inline-block';
             }
+        }
+
+        function showReason() {
+            const randomReason = reasons[Math.floor(Math.random() * reasons.length)];
+            alert("Reason I Love You: " + randomReason);
+        }
+
+        document.addEventListener('mousedown', (e) => {
+            for(let i=0; i<5; i++) createHeart(e.clientX, e.clientY);
         });
 
-        const msg = "To my dearest best friend ... 🎈 You make every day feel like a dream. Happy Birthday!Avika May your life be as bright as these stars. ❤️✨";
-        let j = 0;
-
-        function startApp() {
-            document.getElementById('myAudio').play();
-            document.getElementById('launch-btn').style.display = 'none';
-            document.getElementById('card').style.display = 'block';
-            type();
-            updateTimer();
-            setInterval(updateTimer, 1000);
+        function createHeart(x, y) {
+            const h = document.createElement('div');
+            h.className = 'floating-heart';
+            h.innerHTML = '❤️';
+            h.style.left = x + 'px';
+            h.style.top = y + 'px';
+            h.style.fontSize = Math.random() * 20 + 10 + 'px';
+            h.style.setProperty('--mx', (Math.random() - 0.5) * 300 + 'px');
+            h.style.setProperty('--my', (Math.random() - 0.5) * 300 + 'px');
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 3000);
         }
 
-        function type() {
-            if (j < msg.length) {
-                document.getElementById("typewriter").innerHTML += msg.charAt(j);
-                j++;
-                setTimeout(type, 60);
-            }
-        }
-
-        function updateTimer() {
+        function updateCountdown() {
             const target = new Date("2026-02-18T00:00:00");
             const diff = target - new Date();
             if (diff > 0) {
